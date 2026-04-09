@@ -7,7 +7,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-admission-form',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './admission-form.html'
+  templateUrl: './admission-form.html',
+  styleUrl: './admission-form.css'
 })
 export class AdmissionForm implements OnInit {
 

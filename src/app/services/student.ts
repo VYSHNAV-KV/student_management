@@ -58,6 +58,7 @@ export class StudentService {
   }
 
   getMarks() {
+    // localStorage.removeItem('marks');
     return JSON.parse(localStorage.getItem('marks') || '[]');
   }
 }

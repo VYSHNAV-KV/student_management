@@ -41,7 +41,8 @@ import { StudentService } from '../../services/student';
   selector: 'app-graph',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './graph.html'
+  templateUrl: './graph.html',
+  styleUrl: './graph.css'
 })
 export class Graph implements OnInit {
 
@@ -74,6 +75,7 @@ export class Graph implements OnInit {
   loadChart() {
 
     const marksData = this.service.getMarks();
+    console.log(marksData,"///////////////////v")
 
     // 🔥 Multi-filter logic
     const filtered = marksData.filter((m: any) =>

@@ -1,58 +1,39 @@
-<!-- <h2>Enter Marks</h2>
-
-<select [(ngModel)]="selectedStudent">
-  <option [ngValue]="null">Select Student</option>
-  <option *ngFor="let s of students" [ngValue]="s">
-    {{s.name}} - {{s.class}} - {{s.division}}
-  </option>
-</select><br>
-
-<input type="number" [(ngModel)]="marks" placeholder="Marks"><br>
-
-<button (click)="saveMarks()">Save</button> -->
-
-<div class="container mt-5">
+<!-- <div class="container mt-5">
   <div class="card shadow p-4">
 
     <h3 class="text-center text-primary mb-4">
       Marks Entry (Table View)
     </h3>
 
-    <!-- FILTERS -->
-    <div class="row g-3">
+   
+    <div class="row g-3 mb-3">
 
-      <!-- Section -->
       <div class="col-md-4">
         <label class="form-label">Section</label>
-        <select 
-          class="form-select"
-          [(ngModel)]="selectedSection"
-          (change)="onSectionChange(); filterStudents()">
+        <select class="form-select"
+                [(ngModel)]="selectedSection"
+                (change)="onSectionChange(); filterStudents()">
           <option value="">Select Section</option>
           <option *ngFor="let s of sections" [value]="s">{{s}}</option>
         </select>
       </div>
 
-      <!-- Class -->
       <div class="col-md-4">
         <label class="form-label">Class</label>
-        <select 
-          class="form-select"
-          [(ngModel)]="selectedClass"
-          (change)="filterStudents()"
-          [disabled]="!selectedSection">
+        <select class="form-select"
+                [(ngModel)]="selectedClass"
+                (change)="filterStudents()"
+                [disabled]="!selectedSection">
           <option value="">Select Class</option>
           <option *ngFor="let c of classes" [value]="c">{{c}}</option>
         </select>
       </div>
 
-      <!-- Division -->
       <div class="col-md-4">
         <label class="form-label">Division</label>
-        <select 
-          class="form-select"
-          [(ngModel)]="selectedDivision"
-          (change)="filterStudents()">
+        <select class="form-select"
+                [(ngModel)]="selectedDivision"
+                (change)="filterStudents()">
           <option value="">Select Division</option>
           <option *ngFor="let d of divisions" [value]="d">{{d}}</option>
         </select>
@@ -60,8 +41,8 @@
 
     </div>
 
-    <!-- TABLE -->
-    <div class="table-responsive mt-4" *ngIf="filteredStudents.length > 0">
+    
+    <div class="table-responsive" *ngIf="filteredStudents.length > 0">
 
       <table class="table table-bordered table-hover text-center align-middle">
         <thead class="table-dark">
@@ -70,55 +51,203 @@
             <th>Class</th>
             <th>Division</th>
             <th>Entered Mark</th>
-            <th>Enter / Update Mark</th>
-            <th>Action</th>
+            <th>Enter / Update</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+<tr *ngFor="let s of filteredStudents">
+
+
+  <td>
+    <input class="form-control" [(ngModel)]="s.name">
+  </td>
+
+ 
+  <td>
+    <select class="form-select"
+            [(ngModel)]="s.section"
+            (change)="s.class = ''">
+      <option *ngFor="let sec of sections" [value]="sec">
+        {{sec}}
+      </option>
+    </select>
+  </td>
+
+
+  <td>
+    <select class="form-select"
+            [(ngModel)]="s.class">
+     
+      <option *ngFor="let c of getClasses(s.section)" [value]="c">
+  {{c}}
+</option>
+    </select>
+  </td>
+
+  
+  <td>
+    <select class="form-select"
+            [(ngModel)]="s.division">
+      <option *ngFor="let d of divisions" [value]="d">
+        {{d}}
+      </option>
+    </select>
+  </td>
+
+
+  <td>
+    <span *ngIf="s.enteredMark !== null; else noMark" class="badge bg-success">
+      {{s.enteredMark}}
+    </span>
+    <ng-template #noMark>
+      <span class="badge bg-secondary">Not Set</span>
+    </ng-template>
+  </td>
+
+  
+  <td>
+    <input type="number" class="form-control"
+           [(ngModel)]="s.marks"
+           placeholder="Enter marks">
+  </td>
+
+  
+  <td>
+    <button class="btn btn-sm btn-success me-2"
+            (click)="saveAll(s)">
+      Save
+    </button>
+
+    <button class="btn btn-sm btn-danger"
+            (click)="deleteStudent(s)">
+      Delete
+    </button>
+  </td>
+
+</tr>
+</tbody>
+      </table>
+
+    </div>
+
+    
+    <div *ngIf="filteredStudents.length === 0" class="text-center mt-4">
+      <div class="alert alert-warning">
+        No students found
+      </div>
+    </div>
+
+  </div>
+</div> -->
+
+<div class="marks-container">
+  <div class="marks-card">
+
+    <h3 class="marks-title">Marks Entry (Table View)</h3>
+
+    <!-- FILTERS -->
+    <div class="filters">
+
+      <div class="filter-group">
+        <label>Section</label>
+        <select [(ngModel)]="selectedSection"
+                (change)="onSectionChange(); filterStudents()">
+          <option value="">Select Section</option>
+          <option *ngFor="let s of sections" [value]="s">{{s}}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Class</label>
+        <select [(ngModel)]="selectedClass"
+                (change)="filterStudents()"
+                [disabled]="!selectedSection">
+          <option value="">Select Class</option>
+          <option *ngFor="let c of classes" [value]="c">{{c}}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Division</label>
+        <select [(ngModel)]="selectedDivision"
+                (change)="filterStudents()">
+          <option value="">Select Division</option>
+          <option *ngFor="let d of divisions" [value]="d">{{d}}</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrapper" *ngIf="filteredStudents.length > 0">
+
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Section</th>
+            <th>Class</th>
+            <th>Division</th>
+            <th>Entered Mark</th>
+            <th>Enter / Update</th>
+            <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
           <tr *ngFor="let s of filteredStudents">
-            <td>{{s.name}}</td>
-            <td>{{s.class}}</td>
-            <td>{{s.division}}</td>
 
-            <!-- Entered Mark -->
             <td>
-              <span *ngIf="s.enteredMark !== null; else noMark" class="badge bg-success">
+              <input [(ngModel)]="s.name">
+            </td>
+
+            <td>
+              <select [(ngModel)]="s.section" (change)="s.class = ''">
+                <option *ngFor="let sec of sections" [value]="sec">{{sec}}</option>
+              </select>
+            </td>
+
+            <td>
+              <select [(ngModel)]="s.class">
+                <option *ngFor="let c of getClasses(s.section)" [value]="c">{{c}}</option>
+              </select>
+            </td>
+
+            <td>
+              <select [(ngModel)]="s.division">
+                <option *ngFor="let d of divisions" [value]="d">{{d}}</option>
+              </select>
+            </td>
+
+            <td>
+              <span *ngIf="s.enteredMark !== null; else noMark" class="badge success">
                 {{s.enteredMark}}
               </span>
               <ng-template #noMark>
-                <span class="badge bg-secondary">Not Set</span>
+                <span class="badge warning">Not Set</span>
               </ng-template>
             </td>
 
-            <!-- Input -->
             <td>
-              <input 
-                type="number" 
-                class="form-control"
-                [(ngModel)]="s.marks"
-                placeholder="Enter marks">
+              <input type="number" [(ngModel)]="s.marks" placeholder="Enter marks">
             </td>
 
-            <!-- Action -->
             <td>
-              <button 
-                class="btn btn-sm btn-primary"
-                (click)="saveMarks(s)">
-                Save
-              </button>
+              <button class="btn save" (click)="saveAll(s)">Save</button>
+              <button class="btn delete" (click)="deleteStudent(s)">Delete</button>
             </td>
+
           </tr>
         </tbody>
-
       </table>
+
     </div>
 
     <!-- NO DATA -->
-    <div *ngIf="filteredStudents.length === 0" class="mt-4 text-center">
-      <div class="alert alert-warning">
-        No students found
-      </div>
+    <div *ngIf="filteredStudents.length === 0" class="no-data">
+      No students found
     </div>
 
   </div>

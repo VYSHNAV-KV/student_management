@@ -1,18 +1,15 @@
-<div class="container mt-5">
-  <div class="card shadow p-4">
+<div class="graph-container">
+  <div class="graph-card">
 
-    <h3 class="text-center text-primary mb-4">
-      Filtered Student Graph
-    </h3>
+    <h3 class="graph-title">Filtered Student Graph</h3>
 
-    <!-- FILTER ROW -->
-    <div class="row g-3">
+    <!-- FILTERS -->
+    <div class="graph-filters">
 
       <!-- Section -->
-      <div class="col-md-3">
-        <label class="form-label">Section</label>
+      <div class="filter-group">
+        <label>Section</label>
         <select 
-          class="form-select"
           [(ngModel)]="selectedSection"
           (change)="onSectionChange()">
           <option value="">Select Section</option>
@@ -21,10 +18,9 @@
       </div>
 
       <!-- Class -->
-      <div class="col-md-3">
-        <label class="form-label">Class</label>
+      <div class="filter-group">
+        <label>Class</label>
         <select 
-          class="form-select"
           [(ngModel)]="selectedClass"
           [disabled]="!selectedSection">
           <option value="">Select Class</option>
@@ -33,29 +29,23 @@
       </div>
 
       <!-- Division -->
-      <div class="col-md-3">
-        <label class="form-label">Division</label>
-        <select 
-          class="form-select"
-          [(ngModel)]="selectedDivision">
+      <div class="filter-group">
+        <label>Division</label>
+        <select [(ngModel)]="selectedDivision">
           <option value="">All Divisions</option>
           <option *ngFor="let d of divisions" [value]="d">{{d}}</option>
         </select>
       </div>
 
       <!-- Button -->
-      <div class="col-md-3 d-flex align-items-end">
-        <button 
-          class="btn btn-primary w-100"
-          (click)="loadChart()">
-          Show Graph
-        </button>
+      <div class="filter-group button-group">
+        <button (click)="loadChart()">Show Graph</button>
       </div>
 
     </div>
 
     <!-- CHART -->
-    <div class="mt-5">
+    <div class="chart-container">
       <canvas id="chart"></canvas>
     </div>
 

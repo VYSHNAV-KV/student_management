@@ -1,23 +1,21 @@
-<div class="container mt-5">
-  <div class="card shadow p-4">
+<div class="form-container">
+  <div class="form-card">
     
-    <h3 class="text-center mb-4 text-primary">Add Student</h3>
+    <h3 class="form-title">Add Student</h3>
 
     <!-- Name -->
-    <div class="mb-3">
-      <label class="form-label">Student Name</label>
+    <div class="form-group">
+      <label>Student Name</label>
       <input 
         type="text" 
-        class="form-control" 
         [(ngModel)]="student.name" 
         placeholder="Enter student name">
     </div>
 
     <!-- Section -->
-    <div class="mb-3">
-      <label class="form-label">Section</label>
+    <div class="form-group">
+      <label>Section</label>
       <select 
-        class="form-select" 
         [(ngModel)]="student.section" 
         (change)="onSectionChange()">
         <option value="">Select Section</option>
@@ -26,10 +24,9 @@
     </div>
 
     <!-- Class -->
-    <div class="mb-3">
-      <label class="form-label">Class</label>
+    <div class="form-group">
+      <label>Class</label>
       <select 
-        class="form-select" 
         [(ngModel)]="student.class"
         [disabled]="!student.section">
         <option value="">Select Class</option>
@@ -38,22 +35,18 @@
     </div>
 
     <!-- Division -->
-    <div class="mb-3">
-      <label class="form-label">Division</label>
-      <select 
-        class="form-select" 
-        [(ngModel)]="student.division">
+    <div class="form-group">
+      <label>Division</label>
+      <select [(ngModel)]="student.division">
         <option value="">Select Division</option>
         <option *ngFor="let d of divisions" [value]="d">{{d}}</option>
       </select>
     </div>
 
     <!-- Button -->
-    <div class="d-grid">
-      <button class="btn btn-primary" (click)="addStudent()">
-        Add Student
-      </button>
-    </div>
+    <button class="submit-btn" (click)="addStudent()">
+      Add Student
+    </button>
 
   </div>
 </div>

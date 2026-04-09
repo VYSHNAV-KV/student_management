@@ -9,4 +9,6 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('student-management_new');
+
+  
 }
