@@ -38,11 +38,16 @@ export class AdmissionForm implements OnInit {
     this.student.class = '';
   }
 
-  addStudent() {
-    this.service.addStudent(this.student);
-    alert('Student Added');
-
-    this.student = { name: '', section: '', class: '', division: '' };
-    this.classes = []; // reset class dropdown
+addStudent(form: any) {
+  if (form.invalid) {
+    return; // messages will show automatically
   }
+
+  this.service.addStudent(this.student);
+  alert('Student Added');
+
+  this.student = { name: '', section: '', class: '', division: '' };
+  this.classes = [];
+  form.resetForm();
+}
 }

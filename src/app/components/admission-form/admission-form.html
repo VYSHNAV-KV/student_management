@@ -1,52 +1,81 @@
-<div class="form-container">
-  <div class="form-card">
-    
+<div class="page-bg">
+  <div class="form-card animate-card">
+
     <h3 class="form-title">Add Student</h3>
 
-    <!-- Name -->
-    <div class="form-group">
-      <label>Student Name</label>
-      <input 
-        type="text" 
-        [(ngModel)]="student.name" 
-        placeholder="Enter student name">
-    </div>
 
-    <!-- Section -->
-    <div class="form-group">
-      <label>Section</label>
-      <select 
-        [(ngModel)]="student.section" 
-        (change)="onSectionChange()">
-        <option value="">Select Section</option>
-        <option *ngFor="let s of sections" [value]="s">{{s}}</option>
-      </select>
-    </div>
 
-    <!-- Class -->
-    <div class="form-group">
-      <label>Class</label>
-      <select 
-        [(ngModel)]="student.class"
-        [disabled]="!student.section">
-        <option value="">Select Class</option>
-        <option *ngFor="let c of classes" [value]="c">{{c}}</option>
-      </select>
-    </div>
+<form #studentForm="ngForm" (ngSubmit)="addStudent(studentForm)">
 
-    <!-- Division -->
-    <div class="form-group">
-      <label>Division</label>
-      <select [(ngModel)]="student.division">
-        <option value="">Select Division</option>
-        <option *ngFor="let d of divisions" [value]="d">{{d}}</option>
-      </select>
-    </div>
+  <!-- Name -->
+  <div class="form-group">
+    <label>Student Name</label>
+    <input
+      type="text"
+      name="name"
+      [(ngModel)]="student.name"
+      #name="ngModel"
+      required
+      placeholder="Enter student name">
 
-    <!-- Button -->
-    <button class="submit-btn" (click)="addStudent()">
-      Add Student
-    </button>
-
+    <small class="error" *ngIf="name.invalid && studentForm.submitted">
+      Name must be entered
+    </small>
   </div>
+
+  <!-- Section -->
+  <div class="form-group">
+    <label>Section</label>
+    <select
+      name="section"
+      [(ngModel)]="student.section"
+      #section="ngModel"
+      required
+      (change)="onSectionChange()">
+      <option value="">Select Section</option>
+      <option *ngFor="let s of sections" [value]="s">{{s}}</option>
+    </select>
+
+    <small class="error" *ngIf="section.invalid && studentForm.submitted">
+      Section must be entered
+    </small>
+  </div>
+
+  <!-- Class -->
+  <div class="form-group">
+    <label>Class</label>
+    <select
+      name="class"
+      [(ngModel)]="student.class"
+      #classModel="ngModel"
+      required>
+      <option value="">Select Class</option>
+      <option *ngFor="let c of classes" [value]="c">{{c}}</option>
+    </select>
+
+    <small class="error" *ngIf="classModel.invalid && studentForm.submitted">
+      Class must be entered
+    </small>
+  </div>
+
+  <!-- Division -->
+  <div class="form-group">
+    <label>Division</label>
+    <select
+      name="division"
+      [(ngModel)]="student.division"
+      #division="ngModel"
+      required>
+      <option value="">Select Division</option>
+      <option *ngFor="let d of divisions" [value]="d">{{d}}</option>
+    </select>
+
+    <small class="error" *ngIf="division.invalid && studentForm.submitted">
+      Division must be entered
+    </small>
+  </div>
+
+  <button type="submit">Add Student</button>
+
+</form>
 </div>
